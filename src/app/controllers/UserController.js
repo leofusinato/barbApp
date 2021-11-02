@@ -1,5 +1,6 @@
-const User = require('../models/User');
-const authHelper = require('../helpers/auth')
+
+const User = require('../../app/models/User');
+const authHelper = require('../../helpers/auth')
 
 module.exports = {
     async index(req, res) {
