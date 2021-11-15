@@ -17,6 +17,7 @@ routes.post('/reset_password', AuthController.resetPassword);
 routes.get('/users/:user_id/barbershop', authMiddleware, BarbershopController.indexFromUser)
 routes.post('/users/:user_id/barbershop', authMiddleware, BarbershopController.store)
 routes.delete('/barbershop/:barbershop_id', authMiddleware, BarbershopController.remove)
+routes.put('/barbershop/:barbershop_id', authMiddleware, BarbershopController.update)
 routes.get('/barbershop', authMiddleware, BarbershopController.index)
 
 module.exports = routes;

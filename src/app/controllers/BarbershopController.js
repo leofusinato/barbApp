@@ -60,5 +60,21 @@ module.exports = {
         } catch (err) {
             return res.status(400).send({ error: 'Error on delete barbershop, try again.' })
         }
+    },
+    async update(req, res) {
+        const { barbershop_id } = req.params; 
+        const { name, phone, address } = req.body;
+        try {
+            const barbershop = await Barbershop.findByPk(barbershop_id);
+            if(!barbershop) {
+                return res.status(400).json({ error: 'Barbershop not found'});
+            }
+            await Barbershop.update({name, phone, address}, {where: { id: barbershop_id}});
+            console.log('123');
+
+            return res.status(200).json(barbershop);
+        } catch (err) {
+            return res.status(400).send({ error: 'Error on update barbershop, try again.' })
+        }
     }
 }
