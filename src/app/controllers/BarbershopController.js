@@ -39,6 +39,8 @@ module.exports = {
             const barbershop = await Barbershop.create({ 
                 name, phone, address, user_id
             });
+
+            await barbershop.addUser(user);
     
             return res.json(barbershop);
         } catch (err) {
@@ -70,7 +72,6 @@ module.exports = {
                 return res.status(400).json({ error: 'Barbershop not found'});
             }
             await Barbershop.update({name, phone, address}, {where: { id: barbershop_id}});
-            console.log('123');
 
             return res.status(200).json(barbershop);
         } catch (err) {

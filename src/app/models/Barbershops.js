@@ -12,6 +12,7 @@ class Barbershop extends Model {
     }
     static associate(models) {
         this.belongsTo(models.User, { foreignKey: 'user_id', as: 'owner' });
+        this.belongsToMany(models.User, { foreignKey: 'barbershop_id', through: 'barber_barbershop', as: 'users'})
     }
 }
 
