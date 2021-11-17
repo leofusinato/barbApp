@@ -7,7 +7,7 @@ module.exports = {
             const barbershops = await Barbershop.findAll();
             return res.json(barbershops);
         } catch (err) {
-            return res.status(400).send({ error: "Error on get barbershops, try again." })
+            return res.status(400).send({ message: "Erro ao buscar barbearias, tente novamente" })
         }
     },
     async indexFromUser(req, res) {
@@ -18,11 +18,11 @@ module.exports = {
                 include: { association: 'barbershops' }
             });
             if(!user) {
-                return res.status(400).json({ error: 'User not found'});
+                return res.status(400).json({ message: 'Usuário não encontrado'});
             }
             return res.json(user.barbershops);
         } catch (err) {
-            return res.status(400).send({ error: "Error on get user's barbershops, try again." })
+            return res.status(400).send({ message: "Erro ao buscar barbearias do barbeiro." })
         }
     },
     async store(req, res) {
@@ -33,7 +33,7 @@ module.exports = {
             const user = await User.findByPk(user_id);
     
             if(!user) {
-                return res.status(400).json({ error: 'User not found'});
+                return res.status(400).json({ message: 'Usuário não encontrado'});
             }
     
             const barbershop = await Barbershop.create({ 
@@ -44,7 +44,7 @@ module.exports = {
     
             return res.json(barbershop);
         } catch (err) {
-            return res.status(400).send({ error: 'Error on create barbershop, try again.' })
+            return res.status(400).send({ message: 'Erro ao criar barbearia, tente novamente.' })
         }
 
     },
@@ -53,14 +53,14 @@ module.exports = {
         try {
             const barbershop = await Barbershop.findByPk(barbershop_id);
             if(!barbershop) {
-                return res.status(400).json({ error: 'Barbershop not found'});
+                return res.status(400).json({ message: 'Barbearia não encontrada'});
             }
 
             await barbershop.destroy();
 
-            return res.status(200).json({ message: "Barbershop deleted" });
+            return res.status(200).json({ message: "Barbearia removida" });
         } catch (err) {
-            return res.status(400).send({ error: 'Error on delete barbershop, try again.' })
+            return res.status(400).send({ message: 'Erro ao remover barbearia, tente novamente.' })
         }
     },
     async update(req, res) {
@@ -69,13 +69,13 @@ module.exports = {
         try {
             const barbershop = await Barbershop.findByPk(barbershop_id);
             if(!barbershop) {
-                return res.status(400).json({ error: 'Barbershop not found'});
+                return res.status(400).json({ message: 'Barbearia não encontrada'});
             }
             await Barbershop.update({name, phone, address}, {where: { id: barbershop_id}});
 
             return res.status(200).json(barbershop);
         } catch (err) {
-            return res.status(400).send({ error: 'Error on update barbershop, try again.' })
+            return res.status(400).send({ message: 'Erro ao atualizar barbearia, tente novamente.' })
         }
     }
 }

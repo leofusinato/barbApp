@@ -11,7 +11,7 @@ module.exports = {
         const { name, email, password } = req.body;
         try {
             if(await User.findOne({ where: { email } })) {
-                return res.status(403).send({ error: "User already exists" });
+                return res.status(403).send({ error: "Usuário já existe" });
             }
     
             const user = await User.create({ name, email, password });
@@ -19,7 +19,7 @@ module.exports = {
     
             return res.json({ user, token: authHelper.generateToken({ id: user.id }) });
         } catch(err) { 
-            res.status(400).send({ error: "Registration failed" })
+            res.status(400).send({ error: "Erro ao registrar" })
         }
     }
 }

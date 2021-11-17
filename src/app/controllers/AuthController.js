@@ -10,11 +10,11 @@ module.exports = {
         const user = await User.findOne({ where: { email } });
 
         if(!user) {
-            return res.status(400).send({ error: 'User not found' });
+            return res.status(400).send({ message: 'Usuáro não encontrado' });
         }
 
         if(user.password !== password) {
-            return res.status(400).send({ error: 'Invalid password' });
+            return res.status(400).send({ message: 'Senha inválida' });
         }
 
         user.password = undefined;
@@ -26,7 +26,7 @@ module.exports = {
         try {
             const user = await User.findOne({ where: { email } });
             if(!user) {
-                return res.status(400).send({ error: 'User not found' });
+                return res.status(400).send({ message: 'Usuáro não encontrado' });
             }
 
             const token = crypto.randomBytes(20).toString('hex');
@@ -46,19 +46,19 @@ module.exports = {
 
             mailer.sendMail({ 
                 to: email, 
-                from: 'leonardo.fusinato@magazord.com.br', 
+                from: 'leonardo.alex.fusinato@gmail.com', 
                 template: 'auth/forgot_password', 
                 context: { token }
             }, (err) => {
                 if(err) {
                     console.log(err);
-                    return res.status(400).send({ error: 'Cannot send forgot password email.' })    
+                    return res.status(400).send({ message: 'Não foi possível enviar e-mail de esquecimento de senha, tente novamente' })    
                 }
                 return res.send();
             })
 
         } catch(err) {
-           return res.status(400).send({ error: 'Error on forgot password, try again.' })
+           return res.status(400).send({ message: 'Erro no esquecimento de senha, tente novamente.' })
         }
     },
     async resetPassword(req, res) {
@@ -66,16 +66,16 @@ module.exports = {
         try {
             const user = await User.findOne({ where: { email } });
             if(!user) {
-                return res.status(400).send({ error: 'User not found' });
+                return res.status(400).send({ message: 'Usuáro não encontrado' });
             }
 
             if(token !== user.passwordResetToken) {
-                return res.status(400).send({ error: 'Invalid token' })
+                return res.status(400).send({ message: 'Token inválido' })
             }
 
             const now = new Date();
             if(now > user.passwordResetExpires) {
-                return res.status(400).send({ error: 'Token expired, generate a new one' })    
+                return res.status(400).send({ message: 'Token expirado, gere um novo' })    
             }
 
             user.password = password;
@@ -84,7 +84,7 @@ module.exports = {
             return res.send();
 
         } catch(err) {
-            return res.status(400).send({ error: 'Cannot reset password, try again.' })
+            return res.status(400).send({ message: 'Não foi possível resetar a senha, tente novamente.' })
         }
     }
 }

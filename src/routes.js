@@ -26,6 +26,8 @@ routes.get('/barbershop', authMiddleware, BarbershopController.index)
 
 /* Barbeiros da barbearia */
 routes.get('/barbershop/:barbershop_id/barber/', authMiddleware, BarbershopBarberController.index)
+routes.get('/barbershop/:barbershop_id/barber/:user_id', authMiddleware, BarbershopBarberController.indexFromUser)
+routes.delete('/barbershop/:barbershop_id/barber/:user_id', authMiddleware, BarbershopBarberController.removeBarber)
 routes.post('/barbershop/:barbershop_id/barber/:user_id', authMiddleware, BarbershopBarberController.store)
 
 module.exports = routes;
