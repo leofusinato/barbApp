@@ -5,6 +5,7 @@ const UserController = require('./app/controllers/UserController');
 const AuthController = require('./app/controllers/AuthController');
 const BarbershopController = require('./app/controllers/BarbershopController');
 const BarbershopBarberController = require('./app/controllers/BarbershopBarberController');
+const ProductController = require('./app/controllers/ProductController');
 
 const routes =  express.Router();
 
@@ -29,5 +30,11 @@ routes.get('/barbershop/:barbershop_id/barber/', authMiddleware, BarbershopBarbe
 routes.get('/barbershop/:barbershop_id/barber/:user_id', authMiddleware, BarbershopBarberController.indexFromUser)
 routes.delete('/barbershop/:barbershop_id/barber/:user_id', authMiddleware, BarbershopBarberController.removeBarber)
 routes.post('/barbershop/:barbershop_id/barber/:user_id', authMiddleware, BarbershopBarberController.store)
+
+/* Produtos da conveniência da barbearia */
+routes.post('/barbershop/:barbershop_id/products/', authMiddleware, ProductController.store)
+routes.get('/barbershop/:barbershop_id/products/', authMiddleware, ProductController.index)
+routes.get('/products/:product_id', authMiddleware, ProductController.indexFromId)
+routes.put('/products/:product_id', authMiddleware, ProductController.update)
 
 module.exports = routes;

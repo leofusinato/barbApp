@@ -31,19 +31,19 @@ module.exports = {
             if(!user) {
                 return res.status(404).json({ message: 'Usuário não encontrado' });
             }
-
-            const users = await barbershop.getUsers();
-            if(users.length > 0) {
-                users.forEach((user) =>{
-                    if(user.id == user_id) {
-                        return res.json(user);
+            const barbers = await barbershop.getUsers();
+            if(barbers.length > 0) {
+                barbers.map((barber) => {
+                    if(barber.id == user_id) {
+                        return res.json(barber);
                     }
                 })
             } else {
                 return res.status(404).json({message: "Esta barbearia ainda não possui barbeiros"});
-            }on(users);
+            }
+            return res.status(404).json({message: "Este barbeiro não pertence a esta barbearia"});
         } catch (err) {
-            return res.status(400).json({message: 'Erro ao bucar barbeiro, tente novamente'});
+            return res.status(400).json({message: 'Erro ao buscar barbeiro, tente novamente'});
         }
     },
     async store(req, res) {

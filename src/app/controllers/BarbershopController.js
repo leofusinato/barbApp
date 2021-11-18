@@ -73,7 +73,7 @@ module.exports = {
             }
             await Barbershop.update({name, phone, address}, {where: { id: barbershop_id}});
 
-            return res.status(200).json(barbershop);
+            return res.status(200).json(await Barbershop.findByPk(barbershop_id));
         } catch (err) {
             return res.status(400).send({ message: 'Erro ao atualizar barbearia, tente novamente.' })
         }
