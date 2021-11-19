@@ -6,6 +6,7 @@ const AuthController = require('./app/controllers/AuthController');
 const BarbershopController = require('./app/controllers/BarbershopController');
 const BarbershopBarberController = require('./app/controllers/BarbershopBarberController');
 const ProductController = require('./app/controllers/ProductController');
+const ReserveController = require('./app/controllers/ReserveController');
 
 const routes =  express.Router();
 
@@ -36,5 +37,15 @@ routes.post('/barbershop/:barbershop_id/products/', authMiddleware, ProductContr
 routes.get('/barbershop/:barbershop_id/products/', authMiddleware, ProductController.index)
 routes.get('/products/:product_id', authMiddleware, ProductController.indexFromId)
 routes.put('/products/:product_id', authMiddleware, ProductController.update)
+routes.delete('/products/:product_id', authMiddleware, ProductController.remove)
+
+/* Reservas */
+routes.post('/reserve/', authMiddleware, ReserveController.store)
+routes.get('/reserve/', authMiddleware, ReserveController.index)
+routes.get('/reserve/barber/:barber_id', authMiddleware, ReserveController.indexFromBarber)
+routes.get('/reserve/barbershop/:barbershop_id', authMiddleware, ReserveController.indexFromBarbershop)
+routes.get('/reserve/user/:user_id', authMiddleware, ReserveController.indexFromUser)
+routes.put('/reserve/:reserve_id', authMiddleware, ReserveController.update)
+routes.delete('/reserve/:reserve_id', authMiddleware, ReserveController.remove)
 
 module.exports = routes;

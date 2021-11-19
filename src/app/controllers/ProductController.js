@@ -62,5 +62,19 @@ module.exports = {
         } catch (err) {
             return res.status(400).json({ message: 'Erro ao buscar produtos da barbearia'})
         }
+    },
+    async remove(req, res) {
+        const { product_id } = req.params;
+
+        try {
+            const product = await Product.findByPk(product_id);
+            if(!product) {
+                return res.status(404).json({ message: 'Produto não encontrado'});
+            }
+            await product.destroy();
+            return res.json({ message: 'Produto removido com sucesso' });
+        } catch (err) {
+            return res.status(400).json({ message: 'Erro ao remover produto da barbearia'})
+        }
     }
 }
