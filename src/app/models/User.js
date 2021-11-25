@@ -6,6 +6,7 @@ class User extends Model {
             name: DataTypes.STRING,
             email: DataTypes.STRING,
             password: DataTypes.STRING,
+            is_barber: DataTypes.BOOLEAN,
             passwordResetToken: DataTypes.STRING,
             passwordResetExpires: DataTypes.DATE,
         }, {

@@ -28,6 +28,9 @@ module.exports = {
             if(!barber) {
                 return res.status(400).json({ message: 'Barbeiro não encontrado' })
             }
+            if(!barber.is_barber) {
+                return res.status(400).json({ message: 'Usuário não é um barbeiro' })
+            }
             
             const reserves = await Reserve.findAll({
                 where: { barber_id }
@@ -63,7 +66,7 @@ module.exports = {
         }
     },
     async store(req, res) {
-        const { barbershop_id, user_id, barber_id, schedule } = req.body;
+        const { barbershop_id, user_id, barber_id, schedule, situation } = req.body;
 
         try {
             const user = await User.findByPk(user_id);
@@ -91,7 +94,7 @@ module.exports = {
                 return res.status(400).json({ message: 'Esta barbearia não possui barbeiros' })
             }
             if(found) {
-                const reserve = await Reserve.create({ barbershop_id, user_id, barber_id, schedule });
+                const reserve = await Reserve.create({ barbershop_id, user_id, barber_id, schedule, situation });
                 return res.json(reserve);
             }
             return res.status(400).json({ message: 'O barbeiro não pertence a esta barbearia' })
@@ -101,7 +104,7 @@ module.exports = {
     },
     async update(req, res) {
         const { reserve_id } = req.params;
-        const { barber_id, schedule } = req.body;
+        const { barber_id, schedule, situation } = req.body;
 
         try {
             const reserve = await Reserve.findByPk(reserve_id);
@@ -112,7 +115,7 @@ module.exports = {
             if(!barber) {
                 return res.status(400).json({ message: 'Barbeiro não encontrado' })
             }
-            await Reserve.update({ barber_id, schedule }, { where: { id: reserve_id } });
+            await Reserve.update({ barber_id, schedule, situation }, { where: { id: reserve_id } });
             return res.json(await Reserve.findByPk(reserve_id));
         } catch(err) {
             return res.status(400).json({ message: 'Erro ao atualizar reserva' })

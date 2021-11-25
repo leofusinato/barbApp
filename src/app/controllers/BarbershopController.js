@@ -35,6 +35,9 @@ module.exports = {
             if(!user) {
                 return res.status(400).json({ message: 'Usuário não encontrado'});
             }
+            if(!user.is_barber) {
+                return res.status(400).json({ message: 'Usuário não cadastrado como barbeiro'});
+            }
     
             const barbershop = await Barbershop.create({ 
                 name, phone, address, user_id

@@ -3,7 +3,8 @@ const { Model, DataTypes } = require('sequelize');
 class Reserve extends Model {
     static init(sequelize){
         super.init({
-            schedule: DataTypes.DATE
+            schedule: DataTypes.DATE,
+            situation: DataTypes.INTEGER,
         }, {
             sequelize
         })
