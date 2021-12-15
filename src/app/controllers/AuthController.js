@@ -19,7 +19,7 @@ module.exports = {
 
         user.password = undefined;
 
-        res.send({ user, token: authHelper.generateToken({ id: user.id }) })
+        res.json({...user.toJSON(), token: authHelper.generateToken({ id: user.id }) })
     },
     async forgotPassword(req, res) {
         const { email } = req.body;

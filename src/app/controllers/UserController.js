@@ -17,7 +17,7 @@ module.exports = {
             const user = await User.create({ name, email, password, is_barber });
             user.password = undefined;
     
-            return res.json({ user, token: authHelper.generateToken({ id: user.id }) });
+            res.json({...user.toJSON(), token: authHelper.generateToken({ id: user.id }) })
         } catch(err) { 
             res.status(400).send({ error: "Erro ao registrar" })
         }
