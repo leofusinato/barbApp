@@ -33,10 +33,10 @@ module.exports = {
                 order: [['schedule', 'DESC']],
                 include: { association: 'barbershop' }
             });
-            reserve.barbershop_id = undefined;
             if(!reserve) { 
                 return res.status(404).json({ message: 'O usuário ainda não possui reservas' })    
             }
+            reserve.barbershop_id = undefined;
             return res.json(reserve);
         } catch(err) {
             return res.status(400).json({ message: 'Erro ao buscar as reservas' })
