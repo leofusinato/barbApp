@@ -13,8 +13,16 @@ module.exports = {
             }
             const reserves = await Reserve.findAll({
                 where: { user_id },
-                order: [['schedule', 'DESC']]
+                order: [['schedule', 'DESC']],
+                include: [
+                    { association: 'barbershop' }, 
+                    { association: 'barber' }
+                ]
             });
+            reserves.map((reserve) => {
+                reserve.barber_id = undefined;
+                reserve.barbershop_id = undefined;
+            })
             return res.json(reserves);
         } catch(err) {
             return res.status(400).json({ message: 'Erro ao buscar as reservas' })
