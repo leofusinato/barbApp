@@ -31,7 +31,9 @@ module.exports = {
             const reserve = await Reserve.findOne({
                 where: { user_id },
                 order: [['schedule', 'DESC']],
+                include: { association: 'barbershop' }
             });
+            reserve.barbershop_id = undefined;
             if(!reserve) { 
                 return res.status(404).json({ message: 'O usuário ainda não possui reservas' })    
             }
