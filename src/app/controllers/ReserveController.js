@@ -11,9 +11,10 @@ module.exports = {
             if(!user) {
                 return res.status(400).json({ message: 'Pessoa não encontrada' })
             }
-            
             const reserves = await Reserve.findAll({
-                where: { user_id }
+                where: { user_id },
+                order: [['schedule', 'DESC']]
+                
             });
             return res.json(reserves);
         } catch(err) {
