@@ -46,6 +46,7 @@ routes.get('/reserve/', authMiddleware, ReserveController.index)
 routes.get('/reserve/barber/:barber_id', authMiddleware, ReserveController.indexFromBarber)
 routes.get('/reserve/barbershop/:barbershop_id', authMiddleware, ReserveController.indexFromBarbershop)
 routes.get('/reserve/user/:user_id', authMiddleware, ReserveController.indexFromUser)
+routes.get('/reserve/user/:user_id/last', authMiddleware, ReserveController.lastIndexFromUser)
 routes.put('/reserve/:reserve_id', authMiddleware, ReserveController.update)
 routes.delete('/reserve/:reserve_id', authMiddleware, ReserveController.remove)
 

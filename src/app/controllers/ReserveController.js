@@ -14,9 +14,28 @@ module.exports = {
             const reserves = await Reserve.findAll({
                 where: { user_id },
                 order: [['schedule', 'DESC']]
-                
             });
             return res.json(reserves);
+        } catch(err) {
+            return res.status(400).json({ message: 'Erro ao buscar as reservas' })
+        }
+    },
+    async lastIndexFromUser(req, res) {
+        const { user_id } = req.params; 
+
+        try {
+            const user = await User.findByPk(user_id);
+            if(!user) {
+                return res.status(404).json({ message: 'Pessoa não encontrada' })
+            }
+            const reserve = await Reserve.findOne({
+                where: { user_id },
+                order: [['schedule', 'DESC']],
+            });
+            if(!reserve) { 
+                return res.status(404).json({ message: 'O usuário ainda não possui reservas' })    
+            }
+            return res.json(reserve);
         } catch(err) {
             return res.status(400).json({ message: 'Erro ao buscar as reservas' })
         }
