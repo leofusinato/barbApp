@@ -10,6 +10,18 @@ module.exports = {
             return res.status(400).send({ message: "Erro ao buscar barbearias, tente novamente" })
         }
     },
+    async indexFromId(req, res) {
+        const { barbershop_id } = req.params;
+        try {
+            const barbershop = await Barbershop.findByPk(barbershop_id);    
+            if(!barbershop) {
+                return res.status(400).json({ message: 'Barbearia não encontrada'});
+            }
+            return res.json(barbershop);
+        } catch (err) {
+            return res.status(400).send({ message: "Erro ao buscar barbearia, tente novamente" })
+        }
+    },
     async indexFromUser(req, res) {
         const { user_id } = req.params;
 

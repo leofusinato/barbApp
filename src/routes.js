@@ -25,6 +25,7 @@ routes.post('/users/:user_id/barbershop', authMiddleware, BarbershopController.s
 routes.delete('/barbershop/:barbershop_id', authMiddleware, BarbershopController.remove)
 routes.put('/barbershop/:barbershop_id', authMiddleware, BarbershopController.update)
 routes.get('/barbershop', authMiddleware, BarbershopController.index)
+routes.get('/barbershop/:barbershop_id', authMiddleware, BarbershopController.indexFromId)
 
 /* Barbeiros da barbearia */
 routes.get('/barbershop/:barbershop_id/barber/', authMiddleware, BarbershopBarberController.index)
