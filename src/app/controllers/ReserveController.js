@@ -99,6 +99,11 @@ module.exports = {
         const { barbershop_id, user_id, barber_id, schedule, situation } = req.body;
 
         try {
+
+            if(date <= new Date()) {
+                return res.status(400).json({ message: 'A data e hora devem ser maior que a de agora' });
+            }
+
             const user = await User.findByPk(user_id);
             if(!user) {
                 return res.status(400).json({ message: 'Usuário não encontrado' })
