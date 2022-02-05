@@ -134,7 +134,7 @@ module.exports = {
             }
             return res.status(400).json({ message: 'O barbeiro não pertence a esta barbearia' })
         } catch(err) {
-            return res.status(400).json({ message: 'Erro ao cadastrar reserva' })
+            return res.status(400).json({ message: 'Erro ao cadastrar a reserva' })
         }
     },
     async update(req, res) {
@@ -153,7 +153,7 @@ module.exports = {
             await Reserve.update({ barber_id, schedule, situation }, { where: { id: reserve_id } });
             return res.json(await Reserve.findByPk(reserve_id));
         } catch(err) {
-            return res.status(400).json({ message: 'Erro ao atualizar reserva' })
+            return res.status(400).json({ message: 'Erro ao atualizar a reserva' })
         }
     },
     async remove(req, res) {
@@ -165,9 +165,9 @@ module.exports = {
                 return res.status(400).json({ message: 'Reserva não encontrada' })
             }
             await reserve.destroy();
-            return res.json({ err: 'Reserva removida com sucesso'});
+            return res.json({ message: 'Reserva removida com sucesso'});
         } catch(err) {
-            return res.status(400).json({ message: 'Erro ao atualizar reserva' })
+            return res.status(400).json({ message: 'Erro ao remover a  reserva' })
         }
     }
 }

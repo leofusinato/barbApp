@@ -17,6 +17,8 @@ class User extends Model {
         this.hasMany(models.Barbershop, { foreignKey: 'user_id', as: 'barbershops' });
         this.hasMany(models.Reserve, { foreignKey: 'user_id', as: 'user' });
         this.hasMany(models.Reserve, { foreignKey: 'barber_id', as: 'barber' });
+        this.hasMany(models.Invite, { foreignKey: 'user_id', as: 'user_invite' });
+        this.hasMany(models.Invite, { foreignKey: 'barber_id', as: 'barber_invite' });
         this.belongsToMany(models.Barbershop, { foreignKey: 'user_id', through: 'barber_barbershop', as: 'barbershop'})
     }
 }

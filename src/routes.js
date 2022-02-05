@@ -7,6 +7,7 @@ const BarbershopController = require('./app/controllers/BarbershopController');
 const BarbershopBarberController = require('./app/controllers/BarbershopBarberController');
 const ProductController = require('./app/controllers/ProductController');
 const ReserveController = require('./app/controllers/ReserveController');
+const InviteController = require('./app/controllers/InviteController');
 
 const routes =  express.Router();
 
@@ -49,5 +50,13 @@ routes.get('/reserve/user/:user_id', authMiddleware, ReserveController.indexFrom
 routes.get('/reserve/user/:user_id/last', authMiddleware, ReserveController.lastIndexFromUser)
 routes.put('/reserve/:reserve_id', authMiddleware, ReserveController.update)
 routes.delete('/reserve/:reserve_id', authMiddleware, ReserveController.remove)
+
+/* Convites */
+routes.post('/invite/', authMiddleware, InviteController.store)
+routes.get('/invite/', authMiddleware, InviteController.index)
+routes.get('/invite/barber/:barber_id', authMiddleware, InviteController.indexFromBarber)
+routes.get('/invite/user/:user_id', authMiddleware, InviteController.indexFromUser)
+routes.put('/invite/:invite_id', authMiddleware, InviteController.update)
+routes.delete('/invite/:invite_id', authMiddleware, InviteController.remove)
 
 module.exports = routes;

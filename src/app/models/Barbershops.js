@@ -14,6 +14,7 @@ class Barbershop extends Model {
         this.belongsTo(models.User, { foreignKey: 'user_id', as: 'owner' });
         this.hasMany(models.Product, { foreignKey: 'barbershop_id', as: 'barbershop' });
         this.hasMany(models.Reserve, { foreignKey: 'barbershop_id', as: 'barbershops' });
+        this.hasMany(models.Invite, { foreignKey: 'barbershop_id', as: 'barbershops_invite' });
         this.belongsToMany(models.User, { foreignKey: 'barbershop_id', through: 'barber_barbershop', as: 'users'})
     }
 }
