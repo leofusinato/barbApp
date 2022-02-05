@@ -100,7 +100,7 @@ module.exports = {
 
         try {
 
-            if(date <= new Date()) {
+            if(schedule <= new Date()) {
                 return res.status(400).json({ message: 'A data e hora devem ser maior que a de agora' });
             }
 
