@@ -4,6 +4,11 @@ class Invite extends Model {
     static init(sequelize){
         super.init({
             schedule: DataTypes.DATE,
+            /**
+             * 1 - pendente
+             * 2 - confirmado
+             * 3 - cancelado
+             */
             situation: DataTypes.INTEGER,
         }, {
             sequelize
