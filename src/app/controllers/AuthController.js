@@ -51,7 +51,6 @@ module.exports = {
                 context: { token }
             }, (err) => {
                 if(err) {
-                    console.log(err);
                     return res.status(400).send({ message: 'Não foi possível enviar e-mail de esquecimento de senha, tente novamente' })    
                 }
                 return res.send();

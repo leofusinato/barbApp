@@ -91,12 +91,10 @@ module.exports = {
             // }
             // if(found) {
                 const invite = await Invite.create({ barbershop_id, user_id, barber_id, schedule, situation });
-                console.log('chegou');
                 return res.json(invite);
             // }
             return res.status(400).json({ message: 'O barbeiro não pertence a esta barbearia' })
         } catch(err) {
-            console.log(err.message)
             return res.status(400).json({ message: 'Erro ao cadastrar convite' })
         }
     },

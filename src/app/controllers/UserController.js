@@ -7,6 +7,12 @@ module.exports = {
         const users = await User.findAll();
         return res.json(users);
     },
+    async indexBarbers(req, res) {
+        const users = await User.findAll({
+            where: { is_barber: true }
+        });
+        return res.json(users);
+    },
     async store(req, res) {
         const { name, email, password, is_barber } = req.body;
         try {

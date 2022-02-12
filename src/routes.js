@@ -12,8 +12,9 @@ const InviteController = require('./app/controllers/InviteController');
 const routes =  express.Router();
 
 /* Usuário */
-routes.get('/users', authMiddleware, UserController.index);
 routes.post('/users', UserController.store);
+routes.get('/users', authMiddleware, UserController.index);
+routes.get('/usersBarbers', authMiddleware, UserController.indexBarbers);
 
 /* Login */
 routes.post('/login', AuthController.auth)
