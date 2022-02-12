@@ -57,7 +57,7 @@ module.exports = {
         }
     },
     async store(req, res) {
-        const { barbershop_id, user_id, barber_id, schedule, situation } = req.body;
+        const { barbershop, user_id, barber, schedule, situation } = req.body;
 
         try {
 
@@ -69,12 +69,12 @@ module.exports = {
             if(!user) {
                 return res.status(400).json({ message: 'Usuário não encontrado' })
             }
-            const barber = await User.findByPk(barber_id);
-            if(!barber) {
+            const barberFind = await User.findByPk(barber.id);
+            if(!barberFind) {
                 return res.status(400).json({ message: 'Barbeiro não encontrado' })
             }
-            const barbershop = await Barbershop.findByPk(barbershop_id);
-            if(!barbershop) {
+            const barbershopFind = await Barbershop.findByPk(barbershop.id);
+            if(!barbershopFind) {
                 return res.status(400).json({ message: 'Barbearia não encontrada' })
             }
 
