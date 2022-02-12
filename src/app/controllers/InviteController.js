@@ -57,16 +57,11 @@ module.exports = {
         }
     },
     async store(req, res) {
-        const { barbershop, user_id, barber, schedule, situation } = req.body;
+        const { barbershop, user, barber, schedule, situation } = req.body;
 
         try {
-
-            // if(schedule <= new Date()) {
-            //     return res.status(400).json({ message: 'A data e hora devem ser maior que a de agora' });
-            // }
-
-            const user = await User.findByPk(user_id);
-            if(!user) {
+            const userFind = await User.findByPk(user.id);
+            if(!userFind) {
                 return res.status(400).json({ message: 'Usuário não encontrado' })
             }
             const barberFind = await User.findByPk(barber.id);
@@ -78,40 +73,33 @@ module.exports = {
                 return res.status(400).json({ message: 'Barbearia não encontrada' })
             }
 
-            const barbers = await barbershop.getUsers();
-            // let found = false;
-            // if(barbers.length > 0) {
-            //     barbers.map((barber) => {
-            //         if(barber.id == barber_id) { 
-            //             found = true;
-            //         }
-            //     })
-            // } else {
-            //     return res.status(400).json({ message: 'Esta barbearia não possui barbeiros' })
-            // }
-            // if(found) {
-                const invite = await Invite.create({ barbershop_id, user_id, barber_id, schedule, situation });
-                return res.json(invite);
-            // }
-            return res.status(400).json({ message: 'O barbeiro não pertence a esta barbearia' })
+            const invite = await Invite.create({ 
+                barbershop_id: barbershop.id, 
+                user_id: user.id, 
+                barber_id: barber.id, 
+                schedule, 
+                situation 
+            });
+            return res.json(invite);
         } catch(err) {
+            console.log(err);
             return res.status(400).json({ message: 'Erro ao cadastrar convite' })
         }
     },
     async update(req, res) {
         const { invite_id } = req.params;
-        const { barber_id, schedule, situation } = req.body;
+        const { barber, schedule, situation } = req.body;
 
         try {
             const invite = await Invite.findByPk(invite_id);
             if(!invite) {
                 return res.status(400).json({ message: 'Convite não encontrado' })
             }
-            const barber = await User.findByPk(barber_id);
-            if(!barber) {
+            const barberFind = await User.findByPk(barber.id);
+            if(!barberFind) {
                 return res.status(400).json({ message: 'Barbeiro não encontrado' })
             }
-            await Invite.update({ barber_id, schedule, situation }, { where: { id: invite_id } });
+            await Invite.update({ barber_id: barber.id, schedule, situation }, { where: { id: invite_id } });
             return res.json(await Invite.findByPk(invite_id));
         } catch(err) {
             return res.status(400).json({ message: 'Erro ao atualizar o convite' })
