@@ -58,6 +58,8 @@ routes.get('/invite/', authMiddleware, InviteController.index)
 routes.get('/invite/barber/:barber_id', authMiddleware, InviteController.indexFromBarber)
 routes.get('/invite/user/:user_id', authMiddleware, InviteController.indexFromUser)
 routes.put('/invite/:invite_id', authMiddleware, InviteController.update)
+routes.put('/invite/:invite_id/accept', authMiddleware, InviteController.accept)
+routes.put('/invite/:invite_id/recuse', authMiddleware, InviteController.recuse)
 routes.delete('/invite/:invite_id', authMiddleware, InviteController.remove)
 
 module.exports = routes;

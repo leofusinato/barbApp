@@ -82,7 +82,6 @@ module.exports = {
             });
             return res.json(invite);
         } catch(err) {
-            console.log(err);
             return res.status(400).json({ message: 'Erro ao cadastrar convite' })
         }
     },
@@ -103,6 +102,34 @@ module.exports = {
             return res.json(await Invite.findByPk(invite_id));
         } catch(err) {
             return res.status(400).json({ message: 'Erro ao atualizar o convite' })
+        }
+    },
+    async accept(req, res) {
+        const { invite_id } = req.params;
+        
+        try {
+            const invite = await Invite.findByPk(invite_id);
+            if(!invite) {
+                return res.status(400).json({ message: 'Convite não encontrado' })
+            }
+            await Invite.update({ situation: 2 }, { where: { id: invite_id } });
+            return res.json({ message: "Convite aceito com sucesso!" });
+        } catch(err) {
+            return res.status(400).json({ message: 'Erro ao aceitar o convite' })
+        }
+    },
+    async recuse(req, res) {
+        const { invite_id } = req.params;
+        
+        try {
+            const invite = await Invite.findByPk(invite_id);
+            if(!invite) {
+                return res.status(400).json({ message: 'Convite não encontrado' })
+            }
+            await Invite.update({ situation: 3 }, { where: { id: invite_id } });
+            return res.json({ message: "Convite recusado com sucesso!" });
+        } catch(err) {
+            return res.status(400).json({ message: 'Erro ao recusar o convite' })
         }
     },
     async remove(req, res) {
