@@ -3,6 +3,28 @@ const Barbershop = require('../models/Barbershops');
 const User = require('../models/User');
 
 module.exports = {
+    async indexFromId(req, res) {
+        const { invite_id } = req.params;
+
+        try {
+            const invite = await Invite.findOne({
+                include: [
+                    { association: 'barbershop' },
+                    { association: 'user' },
+                    { association: 'barber' }
+                ],
+                where: { 
+                    id: invite_id
+                }
+            });
+            if(!invite) {
+                return res.status(400).json({ message: 'Convite não encontrado' })
+            }
+            return res.json(invite);
+        } catch(err) {
+            return res.status(400).json({ message: 'Erro ao buscar o convite' })
+        }
+    },
     async indexFromUser(req, res) {
         const { user_id } = req.params;
 
@@ -41,7 +63,11 @@ module.exports = {
             }
             
             const invites = await Invite.findAll({
-                where: { barber_id }
+                include: { association: 'barbershop' },
+                where: {
+                    barber_id,
+                    situation: 1
+                }
             });
             return res.json(invites);
         } catch(err) {

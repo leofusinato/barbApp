@@ -17,7 +17,9 @@ module.exports = {
             if(!barbershop) {
                 return res.status(400).json({ message: 'Barbearia não encontrada'});
             }
-            return res.json(barbershop);
+            const barbershopFormatted = { ...barbershop.dataValues, user: { id: barbershop.user_id } };
+            barbershopFormatted.user_id = undefined;
+            return res.json(barbershopFormatted);
         } catch (err) {
             return res.status(400).send({ message: "Erro ao buscar barbearia, tente novamente" })
         }

@@ -55,6 +55,7 @@ routes.delete('/reserve/:reserve_id', authMiddleware, ReserveController.remove)
 /* Convites */
 routes.post('/invite/', authMiddleware, InviteController.store)
 routes.get('/invite/', authMiddleware, InviteController.index)
+routes.get('/invite/:invite_id', authMiddleware, InviteController.indexFromId)
 routes.get('/invite/barber/:barber_id', authMiddleware, InviteController.indexFromBarber)
 routes.get('/invite/user/:user_id', authMiddleware, InviteController.indexFromUser)
 routes.put('/invite/:invite_id', authMiddleware, InviteController.update)
