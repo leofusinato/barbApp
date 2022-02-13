@@ -96,7 +96,10 @@ module.exports = {
         }
     },
     async store(req, res) {
-        const { barbershop_id, user_id, barber_id, schedule, situation } = req.body;
+        const { barbershop, user, barber, schedule, situation } = req.body;
+        const user_id = user.id;
+        const barbershop_id = barbershop.id;
+        const barber_id = barber.id;
 
         try {
 
@@ -104,20 +107,23 @@ module.exports = {
                 return res.status(400).json({ message: 'A data e hora devem ser maior que a de agora' });
             }
 
-            const user = await User.findByPk(user_id);
-            if(!user) {
+            const userExistent = await User.findByPk(user_id);
+            if(!userExistent) {
+                console.log("Usuário não encontrado");
                 return res.status(400).json({ message: 'Usuário não encontrado' })
             }
-            const barber = await User.findByPk(barber_id);
-            if(!barber) {
+            const barberExistent = await User.findByPk(barber_id);
+            if(!barberExistent) {
+                console.log("Barbeiro não encontrado");
                 return res.status(400).json({ message: 'Barbeiro não encontrado' })
             }
-            const barbershop = await Barbershop.findByPk(barbershop_id);
-            if(!barbershop) {
+            const barbershopExistent = await Barbershop.findByPk(barbershop_id);
+            if(!barbershopExistent) {
+                console.log(barbershop_id);
                 return res.status(400).json({ message: 'Barbearia não encontrada' })
             }
 
-            const barbers = await barbershop.getUsers();
+            const barbers = await barbershopExistent.getUsers();
             let found = false;
             if(barbers.length > 0) {
                 barbers.map((barber) => {

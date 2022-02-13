@@ -13,7 +13,10 @@ module.exports = {
     async indexFromId(req, res) {
         const { barbershop_id } = req.params;
         try {
-            const barbershop = await Barbershop.findByPk(barbershop_id);    
+            const barbershop = await Barbershop.findOne({
+                include: { association: 'owner' },
+                where: { id: barbershop_id }
+            });
             if(!barbershop) {
                 return res.status(400).json({ message: 'Barbearia não encontrada'});
             }
