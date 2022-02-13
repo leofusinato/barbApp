@@ -50,6 +50,10 @@ routes.get('/reserve/barbershop/:barbershop_id', authMiddleware, ReserveControll
 routes.get('/reserve/user/:user_id', authMiddleware, ReserveController.indexFromUser)
 routes.get('/reserve/user/:user_id/last', authMiddleware, ReserveController.lastIndexFromUser)
 routes.put('/reserve/:reserve_id', authMiddleware, ReserveController.update)
+
+routes.patch('/reserve/:reserve_id/accept', authMiddleware, ReserveController.accept)
+routes.patch('/reserve/:reserve_id/recuse', authMiddleware, ReserveController.recuse)
+
 routes.delete('/reserve/:reserve_id', authMiddleware, ReserveController.remove)
 
 /* Convites */

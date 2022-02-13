@@ -144,16 +144,48 @@ module.exports = {
         try {
             const reserve = await Reserve.findByPk(reserve_id);
             if(!reserve) {
-                return res.status(400).json({ message: 'Reserva não encontrada' })
+                return res.status(404).json({ message: 'Reserva não encontrada' })
             }
             const barber = await User.findByPk(barber_id);
             if(!barber) {
-                return res.status(400).json({ message: 'Barbeiro não encontrado' })
+                return res.status(404).json({ message: 'Barbeiro não encontrado' })
             }
             await Reserve.update({ barber_id, schedule, situation }, { where: { id: reserve_id } });
             return res.json(await Reserve.findByPk(reserve_id));
         } catch(err) {
             return res.status(400).json({ message: 'Erro ao atualizar a reserva' })
+        }
+    },
+    async accept(req, res) {
+        const { reserve_id } = req.params;
+        
+        try {
+            const reserve = await Reserve.findOne({
+                where: { id: reserve_id },
+            });
+            if(!reserve) {
+                return res.status(404).json({ message: 'Reserva não encontrada' })
+            }
+            await Reserve.update({ situation: 2 }, { where: { id: reserve_id}});
+            return res.json({ message: "Reserva aceita com sucesso" });
+        } catch (err) {
+            return res.status(400).json({ message: 'Erro ao aceitar a reserva' })
+        }
+    },
+    async recuse(req, res) {
+        const { reserve_id } = req.params;
+        
+        try {
+            const reserve = await Reserve.findOne({
+                where: { id: reserve_id },
+            });
+            if(!reserve) {
+                return res.status(404).json({ message: 'Reserva não encontrada' })
+            }
+            await Reserve.update({ situation: 3 }, { where: { id: reserve_id}});
+            return res.json({ message: "Reserva recusada com sucesso" });
+        } catch (err) {
+            return res.status(400).json({ message: 'Erro ao recusar a reserva' })
         }
     },
     async remove(req, res) {
